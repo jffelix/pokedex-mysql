@@ -1,9 +1,36 @@
 import React from 'react';
 
+import Types from './Types.jsx';
+
+import axios from 'axios';
+
 class App extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
+    // create state object
+    this.state = {
+      pokeList: []
+    }
+
+    this.getAllPokemon = this.getAllPokemon.bind(this);
+  }
+
+  componentDidMount() {
+    // invoke getallpokemon
+    this.getAllPokemon();
+  }
+
+  getAllPokemon() {
+    axios.get('/showall')
+      .then(response => {
+        this.setState({
+          pokeList: response.data
+        })
+      })
+      .catch(err => {
+        console.log('Error received while loading all Pokemon: ', err);
+      })
   }
 
   render() {
